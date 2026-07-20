@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Additional global glassmorphism and custom styles */
+body {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  @apply bg-slate-950 text-slate-100 antialiased selection:bg-brand-500 selection:text-white;
+  overflow-x: hidden;
+}
+
+/* Custom glassmorphism utilities */
+.glass-panel {
+  @apply bg-slate-900/50 backdrop-blur-md border border-white/5 shadow-xl;
+}
+
+.glass-card {
+  @apply bg-white/5 backdrop-blur-md border border-white/10 hover:border-brand-500/30 transition-all duration-300 rounded-2xl shadow-xl hover:shadow-brand-500/5 hover:-translate-y-0.5;
+}
+
+.glass-input {
+  @apply bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent transition-all duration-200;
+}
+
+.glass-button-primary {
+  @apply bg-brand-600 hover:bg-brand-500 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 hover:shadow-lg hover:shadow-brand-500/20 active:scale-[0.98] flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.glass-button-secondary {
+  @apply bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium py-3 px-6 rounded-xl transition-all duration-200 active:scale-[0.98] flex items-center justify-center gap-2;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  @apply bg-slate-950;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-800 rounded-full hover:bg-brand-600/50 transition-colors;
+}
+
+/* Premium micro-animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+.animate-float-delayed {
+  animation: float-delayed 5s ease-in-out infinite;
+}
+
+/* ── Leaflet map tile fix ────────────────────────────────────────────────────
+   Tailwind's base layer sets img { display: block; max-width: 100% } which
+   stops Leaflet tile images from rendering correctly. These overrides restore
+   Leaflet's expected img behaviour inside the map container.             */
+.leaflet-container img {
+  max-width: none !important;
+  max-height: none !important;
+  display: inline !important;
+}
+
+.leaflet-container {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  z-index: 0;
+}
+
+/* Ensure custom DivIcon markers don't inherit restrictive positioning */
+.custom-green-marker {
+  background: none !important;
+  border: none !important;
+}
+
+/* Slide down animation for dropdowns */
+@keyframes slideDown {
+  from { transform: translateY(-8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.animate-slide-down {
+  animation: slideDown 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Pulse animation for map marker */
+@keyframes mapPulse {
+  0% { transform: scale(0.9); opacity: 1; }
+  70% { transform: scale(1.6); opacity: 0; }
+  100% { transform: scale(0.9); opacity: 0; }
+}
+.map-marker-pulse {
+  position: relative;
+}
+.map-marker-pulse::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: rgba(5, 150, 105, 0.4);
+  border-radius: 50%;
+  animation: mapPulse 2s infinite;
+  z-index: -1;
+  top: -8px;
+  left: -8px;
+}
